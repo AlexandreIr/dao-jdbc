@@ -1,18 +1,22 @@
 package model.emtities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Department {
+public class Department implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
-	
-	public Department() {}
+
+	public Department() {
+	}
 
 	public Department(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -51,8 +55,4 @@ public class Department {
 		return "Department [id=" + id + ", name=" + name + "]";
 	}
 
-	
-	
-	
-	
 }
