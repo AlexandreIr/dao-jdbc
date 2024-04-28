@@ -11,16 +11,19 @@ public class Seller implements Serializable {
 	private String email;
 	private LocalDate birthday;
 	private double baseSalary;
+	
+	private Department department;
 
 	public Seller() {
 	}
 
-	public Seller(int id, String name, String email, LocalDate birthday, double baseSalary) {
+	public Seller(int id, String name, String email, LocalDate birthday, double baseSalary, Department department) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.birthday = birthday;
 		this.baseSalary = baseSalary;
+		this.department = department;
 	}
 
 	public int getId() {
