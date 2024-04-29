@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
@@ -48,11 +47,10 @@ public class SellerDAOJDBC implements SellerDAO{
 		
 		try {
 			ps = connection.prepareStatement(
-					"SELECT seller.*,department.Name as DepName" 
-					+"FROM seller INNER JOIN department" 
-					+"ON seller.DepartmentId = department.Id" 
-					+"WHERE seller.Id = ?"
-					);
+					"SELECT seller.*,department.Name as DepName "
+							+ "FROM seller INNER JOIN department "
+							+ "ON seller.DepartmentId = department.Id "
+							+ "WHERE seller.Id = ?");
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			if(rs.next()) {
@@ -64,7 +62,7 @@ public class SellerDAOJDBC implements SellerDAO{
 				seller.setId(rs.getInt("Id"));
 				seller.setName(rs.getString("Name"));
 				seller.setEmail(rs.getString("Email"));
-				seller.setBirthday(LocalDate.ofInstant(rs.getDate("BirthDate").toInstant(), ZoneId.systemDefault()));
+				seller.setBirthday(Instant.ofEpochMilli(rs.getDate("BirthDate").getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
 				seller.setBaseSalary(rs.getDouble("BaseSalary"));
 				seller.setDepartment(dep);
 				return seller;
