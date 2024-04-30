@@ -14,9 +14,9 @@ public class App {
 		System.out.println(sel);
 		System.out.println();
 		Department dep = new Department(2, null);
-		List<Seller> list = SellerDAO.findByDepartment(dep);
-		for(Seller s:list) {
-			System.out.println(s);
+		List<Seller> list = sellerDAO.findByDepartment(dep);
+		for (Seller obj : list) {
+			System.out.println(obj);
 		}
 	}
 }
