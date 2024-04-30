@@ -18,5 +18,9 @@ public class App {
 		for (Seller obj : list) {
 			System.out.println(obj);
 		}
+		list = sellerDAO.findAll();
+		for(Seller obj:list) {
+			System.out.println(obj);
+		}
 	}
 }
