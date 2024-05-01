@@ -10,7 +10,10 @@ public class Appp2 {
 		DepartmentDAO depDAO = DAOFactory.createDepartmentDAO();
 		Department dep = new Department(5, "Games");
 		//depDAO.insert(dep);
-		depDAO.update(dep);
+		//depDAO.update(dep);
+		//depDAO.deleteById(dep.getId());
+		Department newDep = depDAO.findById(2);
+		System.out.println(newDep);
 
 	}
 

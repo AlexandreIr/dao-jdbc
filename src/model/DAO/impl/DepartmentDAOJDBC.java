@@ -11,6 +11,7 @@ import db.DB;
 import db.DBException;
 import model.DAO.DepartmentDAO;
 import model.emtities.Department;
+import model.emtities.Seller;
 
 public class DepartmentDAOJDBC implements DepartmentDAO {
 
@@ -70,20 +71,58 @@ public class DepartmentDAOJDBC implements DepartmentDAO {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement ps = null;
+		try {
+			ps = connection.prepareStatement("DELETE FROM department WHERE Id = ?");
+			
+			ps.setInt(1, id);
+			
+			ps.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(ps);
+		}
 
 	}
 
 	@Override
 	public Department findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = connection.prepareStatement(
+					"SELECT * FROM department "
+					+"WHERE id = ?");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				Department dep = instantiateDepartment(rs);
+				return dep;
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override
 	public List<Department> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Department instantiateDepartment(ResultSet rs) throws SQLException {
+		Department dep =new Department();
+		dep.setId(rs.getInt("Id"));
+		dep.setName(rs.getString("Name"));
+		return dep;
 	}
 
 }
