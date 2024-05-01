@@ -14,7 +14,6 @@ import db.DB;
 import db.DBException;
 import model.DAO.DepartmentDAO;
 import model.emtities.Department;
-import model.emtities.Seller;
 
 public class DepartmentDAOJDBC implements DepartmentDAO {
 
