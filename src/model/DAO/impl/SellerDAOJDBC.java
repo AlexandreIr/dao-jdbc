@@ -1,9 +1,11 @@
 package model.DAO.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -27,8 +29,36 @@ public class SellerDAOJDBC implements SellerDAO{
 
 	@Override
 	public void insert(Seller seller) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement ps = null;
+		try {
+			ps = connection.prepareStatement(
+					"INSERT INTO seller "
+					+"(Name, Email, BirthDate, BaseSalary, DepartmentId) " 
+					+"VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, seller.getName());
+			ps.setString(2, seller.getEmail());
+			ps.setDate(3,Date.valueOf(seller.getBirthday()));
+			ps.setDouble(4, seller.getBaseSalary());
+			ps.setInt(5, seller.getDepartment().getId());
+			
+			int rowsAffected = ps.executeUpdate();
+			
+			if(rowsAffected>0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					seller.setId(id);
+				}
+				rs.close();
+			} else {
+				throw new DBException("Unexpected error occured, try again");
+			}
+		} catch(SQLException e) {
+			throw new DBException(e.getMessage());
+		} finally {
+			DB.closeStatement(ps);
+		}
+				
 	}
 
 	@Override
