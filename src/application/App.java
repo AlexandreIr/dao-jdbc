@@ -1,5 +1,8 @@
 package application;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import model.DAO.DAOFactory;
@@ -23,5 +26,11 @@ public class App {
 		for(Seller obj:list) {
 			System.out.println(obj);
 		}
+		System.out.println();
+		/*Seller newSeller = new Seller(null, "Antonio", "antonio@gmail.com",Instant.ofEpochMilli(new Date().getTime()).atZone(ZoneId.systemDefault()).toLocalDate(),4500 ,dep);
+		sellerDAO.insert(newSeller);
+		System.out.println("Inserted! new id = "+newSeller.getId());*/
+		System.out.println();
+		sellerDAO.deleteById(sellerDAO.findByName("Greg").getId());
 	}
 }
